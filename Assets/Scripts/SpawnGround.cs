@@ -10,7 +10,7 @@ public class SpawnGround : MonoBehaviour {
     private Vector2 posK; // pozycja kulki
     private Vector2 pos;
     private float x, y, a, b, bp; // a b i bp to zmienne dla funkcji rownoleglych
-    private float py; //odleglosc do powierzchni sniegu od prostej utworzonej ze srodkow 
+    private float def = 1.0f; //stala
     private float time;
 
 	void Start () {
@@ -55,6 +55,6 @@ public class SpawnGround : MonoBehaviour {
         float d = posK.y - posK.x * c;
         Vector2 PP = new Vector2((b - d) / (a - c), (b - d) / (a - c) * a - b); // punkt przeciecia dwoch funkcji
         float length = Mathf.Sqrt(Mathf.Pow(PP.x + posK.x, 2) + Mathf.Pow(PP.y + posK.y, 2)); //odleglosc
-        bp = b + length; // bprim
+        bp = b + length - def; // bprim
     }
 }

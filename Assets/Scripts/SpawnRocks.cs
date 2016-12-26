@@ -16,9 +16,13 @@ public class SpawnRocks : MonoBehaviour {
         time += Time.deltaTime;
 	    if (time > delta)
         {
-            pos = Camera.main.GetComponent<SpawnGround>().ReturnPos(GameObject.Find("sniezka").gameObject.transform.position);
-            Instantiate(rock, pos, Quaternion.identity);
-            time = 0.0f;
+            SpawnR();
         }
 	}
+    public void SpawnR()
+    {
+        pos = Camera.main.GetComponent<SpawnGround>().ReturnPos(GameObject.Find("sniezka").gameObject.transform.position);
+        Instantiate(rock, pos, Quaternion.Euler(new Vector3(0, 0, Random.Range(-15.0f,15.0f))));
+        time = 0.0f;
+    }
 }
