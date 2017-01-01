@@ -3,26 +3,39 @@ using System.Collections;
 
 public class SpawnRocks : MonoBehaviour {
     public GameObject rock;
+    private MapControl map;
     private Vector2 pos;
     private float time;
-    private float delta;
-	// Use this for initialization
-	void Start () {
-        delta = Random.Range(1.0f, 2.0f);
-	}
-	
-	// Update is called once per frame
+
+	void Start () { 
+        map = gameObject.GetComponent<MapControl>();
+        Spawn();
+    }
+
 	void Update () {
-        time += Time.deltaTime;
-	    if (time > delta)
+
+        if (map.Distance(pos) < 10.0f)
         {
-            SpawnR();
+            Spawn();
+            time = 0.0f;
+        }
+        else
+        {
+            time += Time.deltaTime;
+            if (time > 5.0f)
+            {
+                Spawn();
+                time = 0.0f;
+            }
         }
 	}
-    public void SpawnR()
+    public void Spawn()
     {
-        pos = Camera.main.GetComponent<SpawnGround>().ReturnPos(GameObject.Find("sniezka").gameObject.transform.position);
-        Instantiate(rock, pos, Quaternion.Euler(new Vector3(0, 0, Random.Range(-15.0f,15.0f))));
-        time = 0.0f;
+        int quantity = Random.Range(1, 3);
+        for (int i = 0; i < quantity; i++)
+        {
+            pos = gameObject.GetComponent<MapControl>().ReRockPos();
+            Instantiate(rock, pos, Quaternion.Euler(new Vector3(0, 0, Random.Range(-20.0f, 20.0f))));
+        } 
     }
 }

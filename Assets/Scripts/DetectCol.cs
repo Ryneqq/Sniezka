@@ -7,12 +7,12 @@ public class DetectCol : MonoBehaviour {
 	public bool flag;
 	public GameObject kamerka;
     private Vector3 scale;
-    private float deltaRise, deltaFall;
+    private float deltaRise, deltaFall, delta;
 
 	void Start () 
 	{
 		flag = false;
-        deltaRise = 1.004f; deltaFall = 0.9f;
+        deltaRise = 1.0038f; deltaFall = 0.9f;
         scale = gameObject.GetComponent<SpriteRenderer>().transform.localScale;
 
     }
@@ -28,6 +28,10 @@ public class DetectCol : MonoBehaviour {
             col.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None; //wylacz freeza
             scale = gameObject.GetComponent<SpriteRenderer>().transform.localScale = new Vector3(scale.x * deltaFall, scale.y * deltaFall);
             // ======================================================== */
+        }
+        if (col.gameObject.CompareTag("snieg"))
+        {
+            scale = gameObject.GetComponent<SpriteRenderer>().transform.localScale = new Vector3(scale.x * deltaRise, scale.y * deltaRise);
         }
     }
     void OnCollisionStay2D (Collision2D col)
