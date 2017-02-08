@@ -4,11 +4,13 @@ using System.Collections;
 public class MapControl : MonoBehaviour {
 
     private Vector2 posK;
+    private DetectCol col;
     private float x, y, a, b, bp; // a b i bp to zmienne dla funkcji rownoleglych
     private float def = 1.0f; //stala - potrzebna do obnizenie z lekka prostej zeby kamienie nie lewitowaly
     private float time, clearTime = 10.0f;
 
     void Start () {
+        col = GameObject.FindGameObjectWithTag("sniezka").GetComponent<DetectCol>();
         posK = GameObject.FindGameObjectWithTag("sniezka").transform.position;
 	}
 
@@ -19,6 +21,8 @@ public class MapControl : MonoBehaviour {
         if (time > clearTime)
         {
             ClearMap();
+            col.IncreaseDeltaRise(0.0005f);
+            col.DecreaseDeltaFall(0.0005f);
             time = 0.0f;
         }
 	

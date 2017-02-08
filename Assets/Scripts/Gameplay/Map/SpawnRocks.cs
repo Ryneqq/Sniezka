@@ -31,7 +31,7 @@ public class SpawnRocks : MonoBehaviour {
 	}
     public void Spawn()
     {
-        int quantity = Random.Range(1, 3);
+        int quantity = Random.Range(1, 10);
         for (int i = 0; i < quantity; i++)
         {
             pos = gameObject.GetComponent<MapControl>().ReRockPos();
