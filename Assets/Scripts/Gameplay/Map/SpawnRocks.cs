@@ -13,19 +13,21 @@ public class SpawnRocks : MonoBehaviour {
     }
 
 	void Update () {
-
-        if (map.Distance(pos) < 10.0f)
+        if (!Variables.gameOver)
         {
-            Spawn();
-            time = 0.0f;
-        }
-        else
-        {
-            time += Time.deltaTime;
-            if (time > 5.0f)
+            if (map.Distance(pos) < 10.0f)
             {
                 Spawn();
                 time = 0.0f;
+            }
+            else
+            {
+                time += Time.deltaTime;
+                if (time > 5.0f)
+                {
+                    Spawn();
+                    time = 0.0f;
+                }
             }
         }
 	}

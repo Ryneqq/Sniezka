@@ -21,7 +21,6 @@ public class JumpBaton : MonoBehaviour {
 	{
         if (pressed)
         {
-            Debug.Log("Clicked");
             time += Time.deltaTime;
             if (time >= 1.0f)
             {
@@ -42,12 +41,14 @@ public class JumpBaton : MonoBehaviour {
 	}
     public void Clicked()
     {
-        pressed = true;
+        if (!Variables.gameOver)
+            pressed = true;
+        else
+            Application.LoadLevel("GameOver");
     }
 
     public void Released()
     {
-        Debug.Log("Released");
         pressed = false;
         jump = jump * time + 5.0f;
         time = 0.0f;
