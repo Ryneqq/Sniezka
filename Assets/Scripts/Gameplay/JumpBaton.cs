@@ -33,7 +33,7 @@ public class JumpBaton : MonoBehaviour {
 	{	
 		if (kulka.GetComponent<DetectCol> ().flag) 
 		{
-			kulka.GetComponent<Rigidbody2D> ().velocity = new Vector2 (kulka.GetComponent<Rigidbody2D> ().velocity.x, kulka.GetComponent<Rigidbody2D> ().velocity.y + jump);
+			kulka.GetComponent<Rigidbody2D> ().velocity = new Vector2 (kulka.GetComponent<Rigidbody2D> ().velocity.x, (kulka.GetComponent<Rigidbody2D> ().velocity.y)/2 + jump);
 			kulka.GetComponent<DetectCol> ().DeSetFlag ();
 		}
         jump = 6;
@@ -44,7 +44,7 @@ public class JumpBaton : MonoBehaviour {
         if (!Variables.gameOver)
             pressed = true;
         else
-            Application.LoadLevel("GameOver");
+            Application.LoadLevel("MainMenu");
     }
 
     public void Released()

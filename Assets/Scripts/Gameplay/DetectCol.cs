@@ -6,14 +6,16 @@ public class DetectCol : MonoBehaviour {
 
 	public bool flag;
 	public GameObject kamerka;
-    private Vector3 scale;
-    private float deltaRise, deltaFall;
+    private Vector3 scale, velocity;
+    private float deltaRise, deltaFall, dupa;
+    private bool done = false;
 
 	void Start () 
 	{
 		flag = false;
-        deltaRise = 1.001f; deltaFall = 0.60f;
+        deltaRise = 1.005f; deltaFall = 0.60f;
         scale = gameObject.GetComponent<SpriteRenderer>().transform.localScale;
+        velocity = gameObject.GetComponent<Rigidbody2D>().velocity;
 
     }
     public void DecreaseDeltaFall(float delta)
@@ -28,7 +30,8 @@ public class DetectCol : MonoBehaviour {
 	void OnCollisionEnter2D (Collision2D col)
 	{
 		flag = true;
-		if(col.gameObject.CompareTag("kamien"))
+        velocity = gameObject.GetComponent<Rigidbody2D>().velocity;
+        if (col.gameObject.CompareTag("kamien"))
 		{
 			kamerka.GetComponent<CamerControl> ().Impact ();
             //* ======================== rynek ======================== 
@@ -36,31 +39,18 @@ public class DetectCol : MonoBehaviour {
             col.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None; //wylacz freeza
             scale = gameObject.GetComponent<SpriteRenderer>().transform.localScale = new Vector3(scale.x * deltaFall, scale.y * deltaFall);
             // ======================================================== */
+            Variables.rocksHit++;
         }
         if (col.gameObject.CompareTag("snieg"))
         {
-            scale = gameObject.GetComponent<SpriteRenderer>().transform.localScale = new Vector3(scale.x + deltaRise/30, scale.y + deltaRise/30);
+            scale = gameObject.GetComponent<SpriteRenderer>().transform.localScale = 
+                new Vector3(scale.x * deltaRise + (deltaRise/60.0f)*((4*velocity.x + 10.0f)/20.0f), 
+                scale.y * deltaRise + (deltaRise/60.0f) * ((4*velocity.x + 10.0f) / 20.0f));
+            gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(velocity.x, velocity.y / 2);
         }
     }
-    void OnCollisionStay2D (Collision2D col)
-    {
-        //* ======================== rynek ======================== 
-        if (col.gameObject.CompareTag("snieg"))
-        {
-            scale = gameObject.GetComponent<SpriteRenderer>().transform.localScale = new Vector3(scale.x * deltaRise, scale.y * deltaRise);
-        }
-        // ======================================================== */
-    }
-
     public void DeSetFlag()
 	{
 		flag = false;
 	}
-	/*
-	void OnCollisionExit2D (Collision2D col)
-	{	
-		flag = false;
-		Debug.Log (flag);
-	}	
-	*/
 }

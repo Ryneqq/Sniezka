@@ -15,7 +15,7 @@ public class SpawnRocks : MonoBehaviour {
 	void Update () {
         if (!Variables.gameOver)
         {
-            if (map.Distance(pos) < 10.0f)
+            if (map.Distance(pos) < 15.0f)
             {
                 Spawn();
                 time = 0.0f;
@@ -23,7 +23,7 @@ public class SpawnRocks : MonoBehaviour {
             else
             {
                 time += Time.deltaTime;
-                if (time > 5.0f)
+                if (time > 8.0f)
                 {
                     Spawn();
                     time = 0.0f;

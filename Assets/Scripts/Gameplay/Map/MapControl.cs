@@ -6,7 +6,7 @@ public class MapControl : MonoBehaviour {
     private Vector2 posK;
     private DetectCol col;
     private float x, y, a, b, bp; // a b i bp to zmienne dla funkcji rownoleglych
-    private float def = 1.0f; //stala - potrzebna do obnizenie z lekka prostej zeby kamienie nie lewitowaly
+    private float def = 1.01f; //stala - potrzebna do lekkiego obnizenia prostej zeby kamienie nie lewitowaly
     private float time, clearTime = 8.0f;
 
     void Start () {

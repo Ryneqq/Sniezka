@@ -19,6 +19,7 @@ public class GameOver : MonoBehaviour {
             if (time > 3.0f && !done)
             {
                 Variables.gameOver = true;
+                SaveRecord();
                 EndTheGame();
                 done = true;
             }
@@ -43,18 +44,31 @@ public class GameOver : MonoBehaviour {
             }
         }
     }
-
+    private void SaveRecord()
+    {
+        if (!PlayerPrefs.HasKey("record"))
+        {
+            PlayerPrefs.SetFloat("record", Variables.time);
+            PlayerPrefs.Save();
+        }
+        else if (PlayerPrefs.GetFloat("record") > Variables.time)
+        {
+            PlayerPrefs.SetFloat("record", Variables.time);
+            PlayerPrefs.Save();
+        }
+    }
     private void EndTheGame()
     {
         if (win == true)
         {
-            Camera.main.GetComponent<LogControl>().Set("Win\r\n\r\nYour Time:" + CutStr(Variables.time.ToString()) + "s\r\nYour Record: dupa s");
+            Camera.main.GetComponent<LogControl>().Set("WINNER\r\n\r\nTime:" + CutStr(Variables.time.ToString()) + 
+                "s\r\nRecord:" + CutStr(PlayerPrefs.GetFloat("record").ToString()) + "s");
             GameObject.FindGameObjectWithTag("log").GetComponent<Canvas>().enabled = true;
-            
         }
         else
         {
-            Camera.main.GetComponent<LogControl>().Set("Lose\r\n\r\nTime of the game:" + CutStr(Variables.time.ToString()) + "s");
+            Camera.main.GetComponent<LogControl>().Set("Game Over\r\n\r\nTime:" + 
+                CutStr(Variables.time.ToString()) + "s\r\n Rocks hit: " + Variables.rocksHit.ToString());
             GameObject.FindGameObjectWithTag("log").GetComponent<Canvas>().enabled = true;
         }
     }
